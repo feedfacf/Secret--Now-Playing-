@@ -1,0 +1,9 @@
+Package: com.mkn0dat.secretnowplaying
+Name: Secret "Now Playing"
+Depends: mobilesubstrate
+Version: 0.0.1
+Architecture: iphoneos-arm
+Description: Hide "now playing" info (e.g. title, artist, artwork..) in clock bar, in media controls on your lock screen.
+Maintainer: mkn0dat
+Author: mkn0dat
+Section: Tweaks
