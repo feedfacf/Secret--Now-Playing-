@@ -9,6 +9,7 @@
 {
     SBUIController *_uiController;
 }
+- (BOOL)isLocked;
 + (id)sharedAwayController;
 - (SBUIController *)uiController;
 - (id)awayView;
@@ -217,11 +218,10 @@ static BOOL HiddenArtworkInMusicControl = NO;
 
 - (void)setAlpha:(float)alpha
 {
-    if (!TweakEnabled) {
+    SBAwayController *sharedController = [%c(SBAwayController) sharedAwayController];
+    if (!TweakEnabled || ![sharedController isLocked]) {
         %orig(alpha); return;
     }
-    
-    SBAwayController *sharedController = [%c(SBAwayController) sharedAwayController];
     if (![[sharedController uiController] isOnAC]){
         SBAwayView *awayView = [sharedController awayView];
         if([awayView isPlaying]) {
@@ -234,6 +234,7 @@ static BOOL HiddenArtworkInMusicControl = NO;
             alpha = 1.0f;
         }
     }
+
     %orig(alpha);
 }
 
@@ -245,6 +246,9 @@ static BOOL HiddenArtworkInMusicControl = NO;
 - (void)setAlpha:(float)alpha
 {
     SBAwayController *sharedController = [%c(SBAwayController) sharedAwayController];
+    if (!TweakEnabled || ![sharedController isLocked]) {
+        %orig(alpha); return;
+    }
     if(![(SBAwayView *)[sharedController awayView] isAnimatingOut] && [[sharedController uiController] isOnAC]){
         alpha = 1.0;
     }
